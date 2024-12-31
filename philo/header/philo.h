@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:05:23 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 15:34:25 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:12:28 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int						mtx_check_all_full(t_philo *philo);
 int						mtx_check_is_dead(t_philo *philo);
 int						ft_take_fork(t_philo *philo);
 int						mtx_check_is_full(t_philo *philo);
-int						mtx_check_time_last_meal(t_philo *philo);
-int						mtx_check_meals(t_philo *philo);
 int						mtx_check_end_by_death(t_philo *philo);
 void					who_sleep(t_philo *philo);
 #endif
