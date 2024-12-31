@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:05:23 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 14:17:01 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:53:59 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,26 @@ typedef struct s_philo
 {
 	int					philo_id;
 	int					meals_eaten;
-	int					last_meals_time;
 	bool				philo_is_full;
 	pthread_t			thread_id;
 	pthread_mutex_t		first_fork;
 	pthread_mutex_t		*second_fork;
 	t_data				*data;
-	int					time_last_meal;
-	long				start_time;
+	long				time_last_meal;
 
 }						t_philo;
 
 typedef struct s_data
 {
-	pthread_t			supervisor;
 	long				number_of_philos;
 	long				time_to_death;
 	long				time_to_eat;
 	long				time_to_sleep;
 	int					all_philo_full;
 	long				num_max_meals;
-	bool				philo_is_dead;
+	pthread_t			supervisor;
 	long				start_program;
-	bool				end_program;
+	bool				one_philo_died;
 	pthread_mutex_t		lock_write;
 	pthread_mutex_t		lock_meals;
 	pthread_mutex_t		lock_death;
@@ -85,14 +82,20 @@ int						wrap_mutex(pthread_mutex_t *mutex, t_muthread_code);
 int						wrap_thread(pthread_t *thread, void *function,
 							void *function_data, t_muthread_code code);
 int						data_init(t_data *data);
-int						launch_threads(t_data *data, int nb_philo, t_philo *philo);
-size_t					ft_get_time(void);
+int						launch_threads(t_data *data, int nb_philo,
+							t_philo *philo);
+long					ft_get_time(void);
 size_t					ft_strlen(char *str);
-void					*check_threads(void *philos_void);
+int						check_threads(t_philo *philo);
 void					*ft_routine(void *philos_void);
 void					print_routine(t_philo *philo, char *str);
 int						ft_usleep(size_t millisec);
-int						ft_check_alive(t_data *data);
-int						ft_check_starving(t_data *data, t_philo *philo);
 void					ft_free_philos(t_data *data, int index);
+int						mtx_check_all_full(t_philo *philo);
+int						mtx_check_is_dead(t_philo *philo);
+int						ft_take_fork(t_philo *philo);
+int						mtx_check_is_full(t_philo *philo);
+int						mtx_check_time_last_meal(t_philo *philo);
+int						mtx_check_meals(t_philo *philo);
+int						mtx_check_end_by_death(t_philo *philo);
 #endif

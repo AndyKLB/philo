@@ -6,32 +6,32 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:06:11 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 16:03:07 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:11:28 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-
-
-int	check_ate(t_data *data, t_philo *philo)
+int	check_death(t_philo *philo)
 {
-	int i;
-
-	i = -1;
-	if ()
+	if (mtx_check_is_dead(philo))
 		return (1);
-	
+	return (0);
 }
-void	*check_threads(void *data_void)
-{
-	t_data	*data;
 
-	data = (t_data *)data_void;
+int	check_ate(t_philo *philo)
+{
+	if (mtx_check_all_full(philo))
+		return (1);
+	return (0);
+}
+
+int	check_threads(t_philo *philo)
+{
 	while (1)
 	{
-		if (check_ate || check_death)
+		if (check_ate(philo) || check_death(philo))
 			break ;
 	}
-	return (data_void);
+	return (0);
 }

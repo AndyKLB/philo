@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:21:21 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 12:41:33 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/11/02 14:10:15 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_is_digit(char c)
 {
-	return (c >= '0' || c <= '9');
+	return (c >= '0' && c <= '9');
 }
 
 char	*is_valid_input(char *str)

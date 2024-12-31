@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 16:50:50 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 13:51:27 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:58:38 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,13 @@ size_t	ft_strlen(char *str)
 }
 void	print_routine(t_philo *philo, char *str)
 {
-	long time;
-	t_data *data;
-	
+	t_data	*data;
+
 	data = philo->data;
-	time = ft_get_time() - data->start_program;
-	wrap_mutex(&data->lock_write, LOCK);
-	printf("%ld PHILO N%d %s\n",time, philo->philo_id, str);
-	wrap_mutex(&philo->data->lock_write, UNLOCK);
+	printf("%ld PHILO N%d %s\n", ft_get_time() - philo->data->start_program, philo->philo_id, str);
 }
 
-size_t	ft_get_time(void)
+long	ft_get_time(void)
 {
 	struct timeval	time;
 

@@ -6,41 +6,103 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:20:25 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 16:03:31 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:30:22 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	ft_eat(t_philo *philo)
+int	ft_take_fork(t_philo *philo)
 {
-
+	if (mtx_check_is_full(philo) || mtx_check_end_by_death(philo))
+		return (1);
+	if (philo->philo_id % 2 == 0)
+	{
+		wrap_mutex(&philo->first_fork, LOCK);
+		wrap_mutex(philo->second_fork, LOCK);
+	}
+	else
+	{
+		wrap_mutex(philo->second_fork, LOCK);
+		wrap_mutex(&philo->first_fork, LOCK);
+	}
+	wrap_mutex(&philo->data->lock_write, LOCK);
+	print_routine(philo, FORK_MSG);
+	print_routine(philo, FORK_MSG);
+	print_routine(philo, EAT_MSG);
+	wrap_mutex(&philo->data->lock_write, UNLOCK);
+	return (0);
 }
 
-void	ft_sleep(t_philo *philo)
+int	ft_eat(t_philo *philo)
 {
-
+	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
+		return (1);
+	wrap_mutex(&philo->data->lock_meals, LOCK);
+	philo->meals_eaten++;
+	if (philo->meals_eaten >= philo->data->num_max_meals)
+	{
+		philo->philo_is_full = 1;
+		philo->data->all_philo_full++;
+	}
+	philo->time_last_meal = ft_get_time();
+	wrap_mutex(&philo->data->lock_meals, UNLOCK);
+	ft_usleep(philo->data->time_to_eat);
+	wrap_mutex(&philo->first_fork, UNLOCK);
+	wrap_mutex(philo->second_fork, UNLOCK);
+	// printf("%ld PHILO N%d %s\n", ft_get_time() - philo->data->start_program, philo->philo_id, "release forks");
+	return (0);
 }
 
-void	ft_thinking(t_philo *philo)
+int	ft_sleep(t_philo *philo)
 {
+	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
+		return (1);
+	wrap_mutex(&philo->data->lock_write, LOCK);
+	print_routine(philo, SLEEP_MSG);
+	wrap_mutex(&philo->data->lock_write, UNLOCK);
+	ft_usleep(philo->data->time_to_sleep);
+	return (0);
+}
 
+int	ft_thinking(t_philo *philo)
+{
+	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
+		return (1);
+	wrap_mutex(&philo->data->lock_write, LOCK);
+	print_routine(philo, THINK_MSG);
+	wrap_mutex(&philo->data->lock_write, UNLOCK);
+	return (0);
 }
 
 void	*ft_routine(void *philos_void)
 {
 	t_philo	*philo;
+	int		i;
 
+	i = -1;
 	philo = (t_philo *)philos_void;
-	if (philo->philo_id % 2 == 0)
+	if (philo->philo_id % 2 != 0)
 		ft_usleep(100);
-	while (!ft_check_end(philo->data))
+	if (philo->philo_id == philo->data->number_of_philos
+		&& philo->data->number_of_philos % 2 != 0)
+		ft_usleep(100);
+	while (1)
 	{
-		ft_eat(philo);
-		ft_sleep(philo);
-		ft_thinking(philo);
+		if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
+			break ;
+		if (ft_take_fork(philo))
+			break ;
+		if (ft_eat(philo))
+		{
+			wrap_mutex(&philo->first_fork, UNLOCK);
+			wrap_mutex(philo->second_fork, UNLOCK);
+			break ;
+		}
+		if (ft_sleep(philo))
+			break ;
+		if (ft_thinking(philo))
+			break ;
 	}
-	if (ft_check_alive(philo->data))
-		print_routine(philo, DEAD_MSG);
 	return (philos_void);
 }

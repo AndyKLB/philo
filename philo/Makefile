@@ -2,59 +2,48 @@
 ## ARGUMENTS
 
 NAME = philo
-BONUS = philo_bonus
 
-CC	= cc
+CC = cc
 RM = rm -rf
-FLAGS	= -Wall -Wextra -Werror -g3  -pthread #-fsanitize=thread
-DEP_FLAGS	:=	-MMD -MP
-
+FLAGS = -Wall -Wextra -Werror -g3 -pthread -fsanitize=thread
+DEP_FLAGS = -MMD -MP
 
 #######################################################
 ## SOURCES
 
-SRCS_FILES = philo.c check_input.c  data_init.c \
-			utils.c utils2.c #threads.c check_threads.c routine.c \
-
+SRCS_FILES = philo.c check_input.c data_init.c \
+             utils.c utils2.c ft_check.c threads.c routine.c check_threads.c
 
 SRCS_DIR = ./srcs
-BONUS_SRCS_DIR = ../philo_bonus/srcs_bonus
+OBJ_DIR = ./obj
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
-BONUS_SRCS = $(addprefix $(BONUS_SRCS_DIR)/, $(BONUS_SRCS_FILES))
-
-OBJECTS = $(SRCS:.c=.o) $(LIB_SRCS:.c=.o)
-BONUS_OBJECTS = $(BONUS_SRCS:.c=.o) $(LIB_SRCS:.c=.o)
-DEP	= $(OBJECTS:.o=.d) $(BONUS_OBJECTS:.o=.d)
-
+OBJECTS = $(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
+DEP = $(OBJECTS:.o=.d)
 
 #######################################################
 ## RULES
 
-$(NAME): $(OBJECTS)
-			$(CC) $(DEP_FLAGS) $(FLAGS) $(OBJECTS) -o $@
-			
-all: $(NAME) $(BONUS)
+$(NAME): $(OBJ_DIR) $(OBJECTS)
+	$(CC) $(FLAGS) $(OBJECTS) -o $(NAME)
+
+all: $(NAME)
 
 
-bonus: $(BONUS)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
+	$(CC) $(FLAGS) $(DEP_FLAGS) -c $< -o $@
 
-.c.o:
-	$(CC) $(DEP_FLAGS) $(FLAGS) -c $< -o $(<:.c=.o)
-
-
-$(BONUS): $(BONUS_OBJECTS)
-			$(CC) $(DEP_FLAGS) $(FLAGS) $(BONUS_OBJECTS) -o $@
+-include $(DEP)
 
 clean:
-			$(RM) $(OBJECTS) $(BONUS_OBJECTS) $(DEP)
+	$(RM) $(OBJ_DIR)
 
 fclean: clean
-			$(RM) $(NAME) $(BONUS)
+	$(RM) $(NAME) $(BONUS)
 
-re:	fclean $(NAME)
+re: fclean all
 
-re_bonus: fclean bonus
-
-.PHONY: all bonus clean  fclean re re_bonus
+.PHONY: all bonus clean fclean re

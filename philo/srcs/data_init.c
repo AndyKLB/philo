@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:27:17 by ankammer          #+#    #+#             */
-/*   Updated: 2024/10/30 15:31:28 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:54:02 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_mutexes(t_philo *philo)
 // 		i = -1;
 // 	while (++i < data->number_of_philos)
 // 	{
-// 		printf("PHILO N %d has eaten %d, full: %d, time last meal: %d\n",
+// 		printf("PHILO N %d has eaten %d, full: %d, time last meal: %ld\n",
 // 			philo[i].philo_id, philo[i].meals_eaten, philo[i].philo_is_full,
 // 			philo[i].time_last_meal);
 // 		printf("first_fork : %p, second fork: %p\n", &philo[i].first_fork,
@@ -77,7 +77,7 @@ int	philo_init(t_philo *philo, t_data *data)
 		philo[i].meals_eaten = 0;
 		philo[i].philo_is_full = false;
 		philo[i].thread_id = (pthread_t)0;
-		philo[i].time_last_meal = 0;
+		philo[i].time_last_meal = ft_get_time();
 		if (wrap_mutex(&philo[i].first_fork, INIT))
 			return (ft_free_philos(data, i), ft_error("error mutex init", 16,
 					1));
@@ -92,13 +92,11 @@ int	data_init(t_data *data)
 	int	i;
 
 	i = -1;
-	data->end_program = false;
 	data->start_program = ft_get_time();
 	if (data->start_program == 1)
 		return (ft_error("error gettime", 13, 1));
 	data->all_philo_full = 0;
-	data->philo_is_dead = false;
-	data->supervisor = (pthread_t)0;
+	data->one_philo_died = 0;
 	data->philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (!data->philos)
 		return (ft_error("malloc error\n", 14, 1));
