@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:17:35 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/26 14:23:34 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:56:09 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	launch_threads(t_data *data, int nb_philo, t_philo *philos)
 
 	i = -1;
 	if (nb_philo == 1)
-		return(one_philo(philos), 0);
+		return (one_philo(philos), 0);
 	while (++i < nb_philo)
 	{
 		if (wrap_thread(&philos[i].thread_id, &ft_routine, &philos[i], CREATE))

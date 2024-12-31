@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:30:07 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 10:50:28 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:44:14 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	mtx_check_is_dead(t_philo *philo)
 			{
 				wrap_mutex(&philo->data->lock_meals, UNLOCK);
 				wrap_mutex(&philo->data->lock_death, LOCK);
-				philo->data->one_philo_died = 1;
 				wrap_mutex(&philo->data->lock_write, LOCK);
+				philo->data->one_philo_died = 1;
 				print_routine(philo, DEAD_MSG);
 				wrap_mutex(&philo->data->lock_write, UNLOCK);
 				wrap_mutex(&philo->data->lock_death, UNLOCK);
@@ -59,9 +59,7 @@ int	mtx_check_end_by_death(t_philo *philo)
 {
 	wrap_mutex(&philo->data->lock_death, LOCK);
 	if (philo->data->one_philo_died)
-	{
 		return (wrap_mutex(&philo->data->lock_death, UNLOCK), 1);
-	}
 	wrap_mutex(&philo->data->lock_death, UNLOCK);
 	return (0);
 }
@@ -76,5 +74,3 @@ int	mtx_check_is_full(t_philo *philo)
 	wrap_mutex(&philo->data->lock_meals, UNLOCK);
 	return (0);
 }
-
-

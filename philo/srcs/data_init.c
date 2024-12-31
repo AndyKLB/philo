@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:27:17 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/30 16:54:02 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:55:19 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_free_philos(t_data *data, int index)
 		data->philos = NULL;
 	}
 }
+
 void	init_mutexes(t_philo *philo)
 {
 	int	i;
@@ -53,7 +54,6 @@ void	init_mutexes(t_philo *philo)
 // void print_philo(t_philo *philo, t_data *data)
 // {
 // 	int i;
-	
 // 		i = -1;
 // 	while (++i < data->number_of_philos)
 // 	{
@@ -83,7 +83,6 @@ int	philo_init(t_philo *philo, t_data *data)
 					1));
 	}
 	init_mutexes(philo);
-	// print_philo(philo, data);
 	return (0);
 }
 

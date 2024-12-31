@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:05:23 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/30 16:53:59 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:34:25 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 
 # define ER_THC "error thread create"
 # define ER_THJ "error thread join"
-# define DEAD_MSG "died 💀"
-# define EAT_MSG "is eating 🍗"
-# define THINK_MSG "is thinking 🤓"
-# define SLEEP_MSG "is sleeping 😴💤"
-# define FORK_MSG "has taken a fork 🍴"
+# define DEAD_MSG "died"
+# define EAT_MSG "is eating"
+# define THINK_MSG "is thinking"
+# define SLEEP_MSG "is sleeping"
+# define FORK_MSG "has taken a fork"
 # define ATEMEALS "All philos ate their "
 
 typedef struct s_data	t_data;
@@ -98,4 +98,5 @@ int						mtx_check_is_full(t_philo *philo);
 int						mtx_check_time_last_meal(t_philo *philo);
 int						mtx_check_meals(t_philo *philo);
 int						mtx_check_end_by_death(t_philo *philo);
+void					who_sleep(t_philo *philo);
 #endif

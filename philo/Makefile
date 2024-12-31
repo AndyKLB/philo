@@ -5,7 +5,7 @@ NAME = philo
 
 CC = cc
 RM = rm -rf
-FLAGS = -Wall -Wextra -Werror -g3 -pthread -fsanitize=thread
+FLAGS = -Wall -Wextra -Werror -g3 -pthread #-fsanitize=thread
 DEP_FLAGS = -MMD -MP
 
 #######################################################

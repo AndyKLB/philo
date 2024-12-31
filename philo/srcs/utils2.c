@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 16:50:50 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/26 14:58:38 by ankammer         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:39:37 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ size_t	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
 void	print_routine(t_philo *philo, char *str)
 {
 	t_data	*data;
 
 	data = philo->data;
-	printf("%ld PHILO N%d %s\n", ft_get_time() - philo->data->start_program, philo->philo_id, str);
+	printf("%ld %d %s\n", ft_get_time() - philo->data->start_program,
+		philo->philo_id, str);
 }
 
 long	ft_get_time(void)
