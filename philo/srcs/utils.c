@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:28:14 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 11:55:56 by ankammer         ###   ########.fr       */
+/*   Updated: 2025/01/01 16:00:34 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	wrap_thread(pthread_t *thread, void *function, void *function_data,
 void	who_sleep(t_philo *philo)
 {
 	if (philo->philo_id % 2 != 0)
-		ft_usleep(100);
+		ft_usleep(178);
 	if (philo->philo_id == philo->data->number_of_philos
 		&& philo->data->number_of_philos % 2 != 0)
-		ft_usleep(100);
+		ft_usleep(188);
 }

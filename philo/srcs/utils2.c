@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 16:50:50 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 12:39:37 by ankammer         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:48:19 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ long	ft_get_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		return (1);
+		return (-1);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t millisec)
+int	ft_usleep(long millisec)
 {
-	size_t	start;
-	size_t	current;
+	long	start;
+	long	current;
 
 	start = ft_get_time();
-	if (start == 1)
+	if (start == -1)
 		return (1);
 	while (1)
 	{
 		current = ft_get_time();
-		if (current == 1)
+		if (current == -1)
 			return (1);
 		if (current - start >= millisec)
 			break ;

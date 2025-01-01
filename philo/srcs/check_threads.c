@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:06:11 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 11:25:03 by ankammer         ###   ########.fr       */
+/*   Updated: 2025/01/01 11:28:31 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	check_ate(t_philo *philo)
 
 int	check_threads(t_philo *philo)
 {
-	while (1)
+	while (!check_death(philo))
 	{
-		if (check_ate(philo) || check_death(philo))
+		if (check_ate(philo))
 			break ;
 	}
 	return (0);

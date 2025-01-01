@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:20:25 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 15:54:57 by ankammer         ###   ########.fr       */
+/*   Updated: 2025/01/01 15:56:47 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	ft_take_fork(t_philo *philo)
 int	ft_eat(t_philo *philo)
 {
 	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
-		return (1);
+		return (wrap_mutex(&philo->first_fork, UNLOCK),
+			wrap_mutex(philo->second_fork, UNLOCK), 1);
 	wrap_mutex(&philo->data->lock_meals, LOCK);
 	philo->meals_eaten++;
 	if (philo->meals_eaten >= philo->data->num_max_meals
@@ -52,11 +53,8 @@ int	ft_eat(t_philo *philo)
 	philo->time_last_meal = ft_get_time();
 	wrap_mutex(&philo->data->lock_meals, UNLOCK);
 	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
-	{
-		wrap_mutex(&philo->first_fork, UNLOCK);
-		wrap_mutex(philo->second_fork, UNLOCK);
-		return (1);
-	}
+		return (wrap_mutex(&philo->first_fork, UNLOCK),
+			wrap_mutex(philo->second_fork, UNLOCK), 1);
 	ft_usleep(philo->data->time_to_eat);
 	wrap_mutex(&philo->first_fork, UNLOCK);
 	wrap_mutex(philo->second_fork, UNLOCK);
@@ -78,7 +76,8 @@ int	ft_thinking(t_philo *philo)
 {
 	if (mtx_check_end_by_death(philo) || mtx_check_is_full(philo))
 		return (1);
-		
+	if (philo->philo_id != philo->data->number_of_philos)
+		ft_usleep(360 / 1000);
 	wrap_mutex(&philo->data->lock_write, LOCK);
 	print_routine(philo, THINK_MSG);
 	wrap_mutex(&philo->data->lock_write, UNLOCK);

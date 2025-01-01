@@ -6,7 +6,7 @@
 /*   By: ankammer <ankammer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:05:23 by ankammer          #+#    #+#             */
-/*   Updated: 2024/12/31 16:12:28 by ankammer         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:48:27 by ankammer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ size_t					ft_strlen(char *str);
 int						check_threads(t_philo *philo);
 void					*ft_routine(void *philos_void);
 void					print_routine(t_philo *philo, char *str);
-int						ft_usleep(size_t millisec);
+int						ft_usleep(long millisec);
 void					ft_free_philos(t_data *data, int index);
 int						mtx_check_all_full(t_philo *philo);
 int						mtx_check_is_dead(t_philo *philo);
@@ -97,4 +97,5 @@ int						ft_take_fork(t_philo *philo);
 int						mtx_check_is_full(t_philo *philo);
 int						mtx_check_end_by_death(t_philo *philo);
 void					who_sleep(t_philo *philo);
+int						check_death(t_philo *philo);
 #endif
